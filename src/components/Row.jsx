@@ -38,7 +38,7 @@ function Row({ title, fetchUrl }) {
           className="h-full w-full scroll overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative"
         >
           {movies.map((movie) => (
-            <MovieCard key={title} movie={movie} />
+            <MovieCard key={movie.title} movie={movie} />
           ))}
         </div>
         <MdArrowRight

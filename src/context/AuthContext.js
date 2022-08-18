@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { setDoc, doc } from "firebase/firestore";
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -14,7 +16,10 @@ export function AuthContextProvider({ children }) {
   const [user, setUser] = useState({});
 
   function signUp(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password);
+    createUserWithEmailAndPassword(auth, email, password);
+    setDoc(doc(db, 'users', email), {
+      savedMovies: []
+    })
   }
 
   function logIn(email, password) {
@@ -36,7 +41,7 @@ export function AuthContextProvider({ children }) {
   })
 
   return (
-    <AuthContext.Provider value={{ signUp, user }}>
+    <AuthContext.Provider value={{ signUp, user, logOut, logIn }}>
       {children}
     </AuthContext.Provider>
   );
